@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ROBINHOOD55 — Tools & Projects</title>
+<meta name="description" content="ROBINHOOD55 — open tools for Android automation, wireless ADB, Wi-Fi file transfer and offline-first apps. Shell, Python, Kotlin. Built on Kali Linux.">
+<meta name="author" content="ROBINHOOD55">
+<meta property="og:title" content="ROBINHOOD55 — Tools & Projects">
+<meta property="og:description" content="Open tools for Android automation, wireless ADB, Wi-Fi file transfer and offline-first apps.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230b0d10'/><text y='72' x='50' font-size='58' text-anchor='middle' fill='%23ffb454' font-family='monospace'>&gt;_</text></svg>">
+
+<style>
+/* ==========================================================================
+   ROBINHOOD55 — tools catalog
+   surface: Explore (a catalog you scan) with a Decide/Learn hero
+   ========================================================================== */
+
+@font-face{font-family:'InterVar';font-style:normal;font-weight:100 900;font-display:swap;
+  src:url(https://cdn.jsdelivr.net/npm/@fontsource-variable/inter@5.1.0/files/inter-latin-wght-normal.woff2) format('woff2-variations')}
+@font-face{font-family:'JetBrainsMonoVar';font-style:normal;font-weight:100 800;font-display:swap;
+  src:url(https://cdn.jsdelivr.net/npm/@fontsource-variable/jetbrains-mono@5.1.1/files/jetbrains-mono-latin-wght-normal.woff2) format('woff2-variations')}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+:root{
+  --sans:'InterVar',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  --mono:'JetBrainsMonoVar',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --step--1:clamp(12.5px,.79rem,13.5px);
+  --step-0:clamp(14.5px,.9rem,15.5px);
+  --step-1:clamp(16px,1.02rem,17.5px);
+  --step-2:clamp(19px,1.35rem,23px);
+  --step-3:clamp(24px,2.1rem,32px);
+  --step-4:clamp(32px,4.4vw,56px);
+  --step-5:clamp(40px,6.4vw,84px);
+  --r-sm:6px; --r-md:10px; --r-lg:16px; --r-xl:22px; --r-full:999px;
+  --ease:cubic-bezier(.32,.72,0,1);
+  --ease-out:cubic-bezier(.16,1,.3,1);
+  --dur:.34s;
+  --pad:clamp(20px,4vw,40px);
+  --maxw:1220px;
+}
+[data-theme="dark"]{
+  --bg:#08090b; --bg-raise:#0d0f12; --bg-card:#101317; --bg-card-2:#14181d; --bg-input:#0c0e11;
+  --line:rgba(255,255,255,.075); --line-2:rgba(255,255,255,.13); --line-3:rgba(255,255,255,.22);
+  --ink:#f2f4f7; --ink-2:#a3abb6; --ink-3:#767f8c; --ink-4:#565e6a;
+  --accent:#ffb454; --accent-2:#ff9f1c;
+  --accent-soft:rgba(255,180,84,.12); --accent-line:rgba(255,180,84,.3);
+  --ok:#4ade80; --ok-soft:rgba(74,222,128,.12);
+  --warn:#fbbf24; --warn-soft:rgba(251,191,36,.12);
+  --shadow-1:0 1px 2px rgba(0,0,0,.5);
+  --shadow-2:0 8px 26px -8px rgba(0,0,0,.7);
+  --shadow-3:0 24px 70px -20px rgba(0,0,0,.85);
+  --glass:rgba(10,11,14,.72);
+  --grain:.022;
+}
+[data-theme="light"]{
+  --bg:#ffffff; --bg-raise:#f7f8fa; --bg-card:#ffffff; --bg-card-2:#fafbfc; --bg-input:#f3f4f6;
+  --line:rgba(9,12,20,.1); --line-2:rgba(9,12,20,.16); --line-3:rgba(9,12,20,.28);
+  --ink:#0a0c11; --ink-2:#464e5a; --ink-3:#666e7c; --ink-4:#8b93a1;
+  --accent:#b45309; --accent-2:#92400e;
+  --accent-soft:rgba(180,83,9,.075); --accent-line:rgba(180,83,9,.26);
+  --ok:#15803d; --ok-soft:rgba(21,128,61,.09);
+  --warn:#a16207; --warn-soft:rgba(161,98,7,.1);
+  --shadow-1:0 1px 2px rgba(9,12,20,.06);
+  --shadow-2:0 10px 30px -12px rgba(9,12,20,.16);
+  --shadow-3:0 26px 70px -24px rgba(9,12,20,.24);
+  --glass:rgba(255,255,255,.8);
+  --grain:.008;
+}
+
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:var(--sans);font-size:var(--step-0);line-height:1.62;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  font-feature-settings:'cv02','cv03','cv04','ss03';
+  overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:0;z-index:1;pointer-events:none;opacity:var(--grain);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+body::after{
+  content:"";position:fixed;top:-30vh;left:50%;transform:translateX(-50%);
+  width:min(1100px,120vw);height:70vh;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse at center,var(--accent-soft),transparent 62%);
+  opacity:.75;filter:blur(20px);
+}
+[data-theme="light"] body::after{opacity:.5}
+
+.wrap{position:relative;z-index:2;max-width:var(--maxw);margin:0 auto;padding:0 var(--pad)}
+::selection{background:var(--accent);color:#08090b}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+kbd{font-family:var(--mono);font-size:11px;padding:2px 6px;border-radius:5px;
+  background:var(--bg-input);border:1px solid var(--line-2);color:var(--ink-2);box-shadow:0 1px 0 var(--line-2)}
+
+.nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(16px) saturate(160%);
+  -webkit-backdrop-filter:blur(16px) saturate(160%);background:transparent;
+  border-bottom:1px solid transparent;transition:background var(--dur) var(--ease),border-color var(--dur) var(--ease)}
+.nav.stuck{background:var(--glass);border-bottom-color:var(--line)}
+.nav-in{max-width:var(--maxw);margin:0 auto;padding:0 var(--pad);height:62px;display:flex;align-items:center;gap:18px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:650;font-size:var(--step-1);
+  letter-spacing:-.02em;text-decoration:none;white-space:nowrap}
+.brand .glyph{font-family:var(--mono);font-size:13px;font-weight:600;color:#08090b;
+  background:linear-gradient(135deg,var(--accent),var(--accent-2));padding:4px 7px;border-radius:7px;line-height:1;
+  box-shadow:0 2px 10px -2px var(--accent-line)}
+.nav-sp{flex:1}
+.nav-link{font-size:var(--step--1);color:var(--ink-2);text-decoration:none;padding:7px 2px;transition:color .18s;white-space:nowrap}
+.nav-link:hover{color:var(--ink)}
+@media (max-width:640px){.nav-link.opt{display:none}}
+.searchbtn{display:flex;align-items:center;gap:9px;background:var(--bg-input);
+  border:1px solid var(--line-2);border-radius:var(--r-md);padding:7px 11px;color:var(--ink-3);
+  font-size:var(--step--1);min-width:180px;transition:border-color .18s,background .18s,color .18s}
+.searchbtn:hover{border-color:var(--line-3);color:var(--ink-2)}
+.searchbtn svg{flex:none}
+.searchbtn .txt{flex:1;text-align:left}
+@media (max-width:820px){.searchbtn .txt,.searchbtn kbd{display:none}.searchbtn{min-width:auto;padding:8px}}
+@media (max-width:400px){.searchbtn{display:none}}
+.iconbtn{width:34px;height:34px;border-radius:var(--r-sm);border:1px solid var(--line-2);
+  display:grid;place-items:center;color:var(--ink-2);transition:all .18s;flex:none}
+.iconbtn:hover{color:var(--ink);border-color:var(--line-3);background:var(--bg-card)}
+.prog{position:fixed;top:0;left:0;height:2px;z-index:60;width:0;
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .1s linear}
+
+.hero{padding:clamp(56px,10vw,120px) 0 clamp(38px,6vw,64px);position:relative}
+.badge-live{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11.5px;
+  letter-spacing:.06em;color:var(--ink-2);background:var(--bg-card);border:1px solid var(--line-2);
+  border-radius:var(--r-full);padding:5px 13px 5px 9px;margin-bottom:26px}
+.dot-live{width:6px;height:6px;border-radius:50%;background:var(--ok);flex:none;animation:pulse 2.4s var(--ease) infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(74,222,128,.5)}70%{box-shadow:0 0 0 8px rgba(74,222,128,0)}100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}}
+@media (prefers-reduced-motion:reduce){.dot-live{animation:none}}
+
+h1{font-size:var(--step-5);line-height:1.02;font-weight:640;letter-spacing:-.038em;
+  margin:0 0 22px;max-width:16ch;text-wrap:balance;text-wrap:pretty}
+h1 .grad{background:linear-gradient(100deg,var(--accent),var(--accent-2));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.lede{font-size:var(--step-2);line-height:1.55;color:var(--ink-2);max-width:54ch;margin:0 0 34px;font-weight:420}
+.lede b{color:var(--ink);font-weight:560}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:52px}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:11px 19px;border-radius:var(--r-md);
+  font-size:var(--step-0);font-weight:540;text-decoration:none;border:1px solid transparent;cursor:pointer;
+  transition:all .2s var(--ease);white-space:nowrap}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#08090b;
+  box-shadow:0 3px 18px -4px var(--accent-line),var(--shadow-1)}
+.btn-primary:hover{transform:translateY(-1.5px);box-shadow:0 8px 26px -6px var(--accent-line),var(--shadow-2)}
+.btn-ghost{background:var(--bg-card);border-color:var(--line-2);color:var(--ink)}
+.btn-ghost:hover{border-color:var(--line-3);background:var(--bg-card-2);transform:translateY(-1.5px)}
+@media (prefers-reduced-motion:reduce){.btn:hover{transform:none}}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:1px;
+  background:var(--line);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;max-width:640px}
+.stat{background:var(--bg-card);padding:16px 18px}
+.stat .n{font-family:var(--mono);font-size:var(--step-3);font-weight:600;letter-spacing:-.03em;
+  line-height:1;font-variant-numeric:tabular-nums}
+.stat .l{font-size:11.5px;color:var(--ink-3);letter-spacing:.07em;text-transform:uppercase;margin-top:7px;font-weight:520}
+
+.toolbar{position:sticky;top:62px;z-index:40;background:var(--glass);
+  backdrop-filter:blur(16px) saturate(160%);-webkit-backdrop-filter:blur(16px) saturate(160%);
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  margin:0 calc(var(--pad) * -1);padding:11px var(--pad)}
+.tb-in{display:flex;flex-wrap:wrap;gap:10px;align-items:center;max-width:var(--maxw);margin:0 auto}
+.segs{display:flex;gap:2px;background:var(--bg-input);border:1px solid var(--line);border-radius:var(--r-md);padding:3px}
+.seg{font-size:var(--step--1);font-weight:520;color:var(--ink-2);padding:6px 13px;border-radius:7px;
+  transition:all .18s;white-space:nowrap}
+.seg:hover{color:var(--ink)}
+.seg[aria-pressed="true"]{background:var(--bg-card);color:var(--ink);box-shadow:var(--shadow-1)}
+.tb-sp{flex:1;min-width:8px}
+.sel{font-family:var(--sans);font-size:var(--step--1);color:var(--ink-2);background:var(--bg-input);
+  border:1px solid var(--line);border-radius:var(--r-md);padding:8px 11px;cursor:pointer;transition:border-color .18s}
+.sel:hover{border-color:var(--line-2)}
+.count{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);white-space:nowrap}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px;padding:26px 0 0}
+.grid.list{grid-template-columns:1fr}
+@media (max-width:700px){.grid{grid-template-columns:1fr}}
+
+.card{position:relative;display:flex;flex-direction:column;background:var(--bg-card);
+  border:1px solid var(--line);border-radius:var(--r-lg);padding:22px 22px 18px;text-decoration:none;
+  transition:transform .3s var(--ease),border-color .3s,box-shadow .3s,background .3s;overflow:hidden}
+.card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:radial-gradient(420px circle at var(--mx,50%) var(--my,0%),var(--accent-soft),transparent 65%);
+  opacity:0;transition:opacity .3s}
+.card:hover{transform:translateY(-3px);border-color:var(--line-2);box-shadow:var(--shadow-3);background:var(--bg-card-2)}
+.card:hover::after{opacity:.55}
+@media (prefers-reduced-motion:reduce){.card:hover{transform:none}}
+.card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.card-top{display:flex;align-items:flex-start;gap:12px;margin-bottom:13px}
+.card-ico{width:36px;height:36px;border-radius:9px;flex:none;display:grid;place-items:center;
+  font-family:var(--mono);font-size:14px;font-weight:600;background:var(--bg-input);
+  border:1px solid var(--line-2);color:var(--accent)}
+.card-name{font-size:var(--step-1);font-weight:600;letter-spacing:-.017em;margin:0;
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;line-height:1.3}
+.card-name .arw{color:var(--accent);opacity:0;transform:translateX(-4px);transition:all .22s var(--ease);font-size:.9em}
+.card:hover .arw{opacity:1;transform:translateX(0)}
+.card-sub{font-family:var(--mono);font-size:11.5px;color:var(--ink-4);margin-top:3px}
+.card-desc{color:var(--ink-2);font-size:var(--step-0);line-height:1.58;margin:0 0 16px;flex:1}
+.card-foot{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding-top:13px;
+  border-top:1px solid var(--line);font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.card-foot .k{color:var(--ink-4)}
+.pill{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;
+  padding:3px 8px;border-radius:var(--r-full);border:1px solid var(--line-2);color:var(--ink-3);
+  white-space:nowrap;font-weight:520}
+.pill.live{color:var(--ok);border-color:var(--ok-soft);background:var(--ok-soft)}
+.pill.local{color:var(--warn);border-color:var(--warn-soft);background:var(--warn-soft)}
+.cmd{display:flex;align-items:center;gap:10px;margin-top:14px;background:var(--bg-input);
+  border:1px solid var(--line);border-radius:var(--r-sm);padding:8px 9px 8px 12px;
+  font-family:var(--mono);font-size:11.5px}
+.cmd code{flex:1;color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cmd .cp{flex:none;padding:4px 9px;border-radius:5px;font-family:var(--sans);font-size:11px;
+  font-weight:540;color:var(--ink-3);border:1px solid var(--line-2);transition:all .18s;white-space:nowrap}
+.cmd .cp:hover{color:var(--ink);border-color:var(--line-3)}
+.cmd .cp.done{color:var(--ok);border-color:var(--ok-soft);background:var(--ok-soft)}
+
+.empty{text-align:center;padding:72px 20px;color:var(--ink-3);border:1px dashed var(--line-2);
+  border-radius:var(--r-lg);margin-top:26px}
+.empty h3{margin:0 0 8px;color:var(--ink-2);font-size:var(--step-1);font-weight:560}
+.empty p{margin:0;font-size:var(--step-0)}
+.empty code{font-family:var(--mono);color:var(--accent);font-size:.94em}
+
+.about{margin-top:clamp(60px,9vw,110px);padding-top:clamp(40px,6vw,64px);border-top:1px solid var(--line);
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(28px,5vw,64px)}
+.about h2{font-size:var(--step-3);font-weight:600;letter-spacing:-.028em;margin:0 0 14px}
+.about p{color:var(--ink-2);margin:0 0 14px;max-width:46ch}
+.about .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--accent);margin:0 0 14px;font-weight:520}
+.stack{display:flex;flex-wrap:wrap;gap:7px;margin-top:6px}
+.stack span{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);background:var(--bg-card);
+  border:1px solid var(--line-2);padding:4px 10px;border-radius:var(--r-full)}
+footer{margin-top:clamp(50px,7vw,80px);padding:26px 0 44px;border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:var(--step--1);color:var(--ink-3)}
+footer a{color:var(--ink-2);text-decoration:none;transition:color .18s}
+footer a:hover{color:var(--accent)}
+footer .row{display:flex;gap:18px;flex-wrap:wrap}
+
+.cp-back{position:fixed;inset:0;z-index:200;background:rgba(4,5,7,.62);
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:none;
+  align-items:flex-start;justify-content:center;padding:12vh 16px 16px}
+.cp-back.open{display:flex;animation:fade .18s var(--ease)}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.cp{width:min(600px,100%);background:var(--bg-raise);border:1px solid var(--line-2);
+  border-radius:var(--r-xl);box-shadow:var(--shadow-3);overflow:hidden;animation:rise .26s var(--ease-out)}
+@keyframes rise{from{opacity:0;transform:translateY(-14px) scale(.985)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.cp-back.open,.cp{animation:none}}
+.cp-head{display:flex;align-items:center;gap:11px;padding:15px 17px;border-bottom:1px solid var(--line)}
+.cp-head svg{color:var(--ink-3);flex:none}
+.cp-head input{flex:1;background:none;border:0;outline:none;color:var(--ink);
+  font-family:var(--sans);font-size:var(--step-1)}
+.cp-head input::placeholder{color:var(--ink-4)}
+.cp-list{max-height:min(52vh,420px);overflow-y:auto;padding:7px}
+.cp-sec{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink-4);padding:11px 12px 6px}
+.cp-item{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:10px 12px;
+  border-radius:var(--r-sm);color:var(--ink-2);transition:background .13s,color .13s}
+.cp-item .ic{width:17px;text-align:center;flex:none;color:var(--ink-3);font-family:var(--mono);font-size:12px}
+.cp-item .t{flex:1;min-width:0;font-size:var(--step-0);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cp-item .s{font-family:var(--mono);font-size:11px;color:var(--ink-4);flex:none}
+.cp-item.on{background:var(--accent-soft);color:var(--ink)}
+.cp-item.on .ic{color:var(--accent)}
+.cp-foot{display:flex;gap:16px;align-items:center;padding:11px 16px;border-top:1px solid var(--line);
+  font-size:11px;color:var(--ink-4);flex-wrap:wrap}
+.cp-foot span{display:flex;align-items:center;gap:6px}
+
+.rv{opacity:0;transform:translateY(14px);transition:opacity .6s var(--ease-out),transform .6s var(--ease-out)}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
+
+.toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,80px);z-index:300;
+  background:var(--bg-raise);border:1px solid var(--line-2);border-radius:var(--r-md);
+  padding:11px 17px;box-shadow:var(--shadow-3);font-size:var(--step--1);color:var(--ink);
+  opacity:0;transition:all .3s var(--ease);pointer-events:none}
+.toast.on{transform:translate(-50%,0);opacity:1}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+</head>
+<body>
+
+<div class="prog" id="prog"></div>
+
+<nav class="nav" id="nav">
+  <div class="nav-in">
+    <a class="brand" href="#top"><span class="glyph">&gt;_</span> ROBINHOOD55</a>
+    <span class="nav-sp"></span>
+    <a class="nav-link opt" href="#tools">Tools</a>
+    <a class="nav-link opt" href="#about">About</a>
+    <button class="searchbtn" id="openSearch" aria-label="Search tools">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <span class="txt">Search tools…</span>
+      <kbd>⌘K</kbd>
+    </button>
+    <button class="iconbtn" id="theme" aria-label="Toggle theme" title="Toggle theme">
+      <svg id="icoSun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      <svg id="icoMoon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    </button>
+    <a class="iconbtn" href="https://github.com/pktradingview3-ops" aria-label="GitHub profile" title="GitHub">
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+    </a>
+  </div>
+</nav>
+
+<div class="wrap" id="top">
+
+  <header class="hero">
+    <div class="badge-live rv">
+      <span class="dot-live"></span>
+      <span id="liveTxt">loading from github…</span>
+    </div>
+
+    <h1 class="rv">Tools that <span class="grad">delete</span> a step,<br>a cable, a wait.</h1>
+
+    <p class="lede rv">
+      Open-source utilities for <b>wireless Android control</b>, <b>device file
+      transfer</b> and <b>offline-first apps</b>. Written in shell, Python and
+      Kotlin, tested on Kali Linux.
+    </p>
+
+    <div class="cta-row rv">
+      <a class="btn btn-primary" href="#tools">
+        Browse tools
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a class="btn btn-ghost" href="https://github.com/pktradingview3-ops">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+        GitHub profile
+      </a>
+    </div>
+
+    <div class="stats rv">
+      <div class="stat"><div class="n" id="s1">—</div><div class="l">tools</div></div>
+      <div class="stat"><div class="n" id="s2">—</div><div class="l">on github</div></div>
+      <div class="stat"><div class="n" id="s3">—</div><div class="l">languages</div></div>
+      <div class="stat"><div class="n" id="s4">—</div><div class="l">open source</div></div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="tools">
+    <div class="tb-in">
+      <div class="segs" role="group" aria-label="filter">
+        <button class="seg" data-f="all" aria-pressed="true">All</button>
+        <button class="seg" data-f="github" aria-pressed="false">On GitHub</button>
+        <button class="seg" data-f="local" aria-pressed="false">Local</button>
+      </div>
+      <span class="tb-sp"></span>
+      <label class="sr" for="sort">Sort</label>
+      <select class="sel" id="sort">
+        <option value="featured">Sort: Featured</option>
+        <option value="name">Sort: Name</option>
+        <option value="stars">Sort: Stars</option>
+        <option value="updated">Sort: Recently updated</option>
+      </select>
+      <label class="sr" for="view">View</label>
+      <select class="sel" id="view">
+        <option value="grid">Grid</option>
+        <option value="list">List</option>
+      </select>
+      <span class="count" id="count"></span>
+    </div>
+  </div>
+
+  <main class="grid" id="grid" aria-live="polite"></main>
+  <div id="empty"></div>
+
+  <section class="about" id="about">
+    <div class="rv">
+      <p class="kicker">About</p>
+      <h2>Built to remove friction.</h2>
+      <p>
+        I write small, focused tools that delete one annoying manual step at a
+        time — a cable you no longer need, a command you no longer retype, a
+        wait you no longer sit through. Everything here is tested before it
+        ships, and MIT-licensed where noted.
+      </p>
+      <p>
+        The catalog is pulled live from GitHub, so what you see is what is
+        actually published.
+      </p>
+    </div>
+    <div class="rv">
+      <p class="kicker">Stack</p>
+      <h2>What I build with.</h2>
+      <div class="stack">
+        <span>Shell</span><span>Bash</span><span>Python 3</span>
+        <span>Kotlin</span><span>Jetpack Compose</span><span>WebRTC</span>
+        <span>ADB / scrcpy</span><span>udev</span><span>systemd</span>
+        <span>Linux (Kali)</span><span>Git</span><span>HTML / CSS / JS</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© <span id="yr">2026</span> ROBINHOOD55 · MIT-licensed where noted</span>
+    <span class="row">
+      <a href="https://github.com/pktradingview3-ops">GitHub</a>
+      <a href="https://github.com/pktradingview3-ops?tab=repositories">All repositories</a>
+      <a href="#top">Back to top ↑</a>
+    </span>
+  </footer>
+</div>
+
+<div class="cp-back" id="cpBack" role="dialog" aria-modal="true" aria-label="Command palette">
+  <div class="cp">
+    <div class="cp-head">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="cpInput" type="text" placeholder="Search tools and actions…" autocomplete="off" spellcheck="false">
+      <kbd>esc</kbd>
+    </div>
+    <div class="cp-list" id="cpList"></div>
+    <div class="cp-foot">
+      <span><kbd>↑</kbd><kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>⌘K</kbd> toggle</span>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+'use strict';
+/* =========================================================================
+   DATA
+   The two published repos are fetched live from the GitHub API; local
+   projects are declared here because they are not published yet.
+   ========================================================================= */
+const GH_USER = 'pktradingview3-ops';
+const CACHE_KEY = 'rh55-repos-v1';
+const CACHE_TTL = 1000 * 60 * 30;
+
+const FEATURED = {
+  'android-tcp': {
+    ico: '$_', featured: 1,
+    blurb: 'Wireless ADB & scrcpy for any Android phone — one command to enable adb over Wi-Fi (adb tcpip 5555 / adb connect), plus a udev rule that re-arms it the moment you plug the phone in.',
+    install: 'git clone https://github.com/pktradingview3-ops/android-tcp.git'
+  },
+  'calc': {
+    ico: '=', featured: 2,
+    blurb: 'Smart calculator — a small, focused utility for everyday arithmetic.',
+    install: ''
+  }
+};
+
+const LOCAL = [
+  { name:'wifi-file-transfer', ico:'⇄', featured:3, status:'local', lang:'Python', size:'299 lines',
+    license:'—', updated:'2026-10-06', install:'',
+    blurb:'Move files between a computer and any phone over the same Wi-Fi network — no cable, no app install, no USB debugging. The phone just opens a web page.' },
+  { name:'offline-chat-app', ico:'⛓', featured:4, status:'local', lang:'Kotlin + WebRTC', size:'',
+    license:'—', updated:'2026-10-07', install:'',
+    blurb:'Offline peer-to-peer chat across Android and the web over WebRTC — no server and no internet on the local link. A Kotlin app plus a web client.' },
+  { name:'DailyBookAndroid', ico:'☰', featured:5, status:'local', lang:'Kotlin + Compose', size:'',
+    license:'—', updated:'2026-10-07', install:'',
+    blurb:'Jetpack Compose ledger for daily entries — signed release build, changelog, security notes and a written test guide.' },
+  { name:'trading-journal', ico:'⌗', featured:6, status:'local', lang:'Product docs', size:'',
+    license:'—', updated:'2026-10-06', install:'',
+    blurb:'Product spec and data model for a trading journal — a PDR and a data dictionary, versioned as HTML and Markdown.' }
+];
+
+const EMBEDDED = [
+  { name:'android-tcp', ico:'$_', status:'github', lang:'Shell', size:'', license:'MIT',
+    stars:0, updated:'2026-10-08', featured:1, topics:[],
+    blurb:FEATURED['android-tcp'].blurb, url:'https://github.com/pktradingview3-ops/android-tcp',
+    install:'git clone https://github.com/pktradingview3-ops/android-tcp.git' },
+  { name:'calc', ico:'=', status:'github', lang:'', size:'112 KB', license:'',
+    stars:0, updated:'2026-10-06', featured:2, topics:[],
+    blurb:FEATURED['calc'].blurb, url:'https://github.com/pktradingview3-ops/calc', install:'' }
+];
+
+/* ========================================================================= */
+const S = { repos:[], projects:[], filter:'all', sort:'featured', view:'grid',
+            q:'', loading:true, source:'embedded' };
+
+const $  = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const norm = s => String(s ?? '').toLowerCase();
+
+function toast(m){
+  const t = $('#toast'); t.textContent = m; t.classList.add('on');
+  clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove('on'), 1900);
+}
+function timeAgo(iso){
+  if(!iso) return '';
+  const d = (Date.now() - new Date(iso).getTime()) / 86400000;
+  if (d < 1) return 'today';
+  if (d < 2) return 'yesterday';
+  if (d < 30) return Math.round(d) + 'd ago';
+  if (d < 365) return Math.round(d/30) + 'mo ago';
+  return Math.round(d/365) + 'y ago';
+}
+
+function build(){
+  const gh = S.repos.map(r => {
+    const f = FEATURED[r.name] || {};
+    const ico = f.ico || (r.language === 'Shell' ? '$_' : r.language === 'Python' ? 'py'
+                        : r.language === 'Kotlin' ? 'kt' : r.language === 'HTML' ? '<>' : '·');
+    return { name:r.name, ico, status:'github',
+      lang:r.language || '—',
+      // size: 0 KB means GitHub hasn't indexed it yet — show nothing, not "0 KB"
+      size:(r.size && r.size > 0) ? (r.size >= 1024 ? (r.size/1024).toFixed(1) + ' MB' : r.size + ' KB') : '',
+      license:r.license ? r.license.spdx_id : '—',
+      stars:r.stargazers_count || 0,
+      updated:r.pushed_at || r.updated_at,
+      featured:f.featured || 99,
+      blurb:f.blurb || r.description || 'No description yet.',
+      url:r.html_url, install:f.install || '', topics:r.topics || [] };
+  });
+  const names = new Set(gh.map(p => p.name));
+  const loc = LOCAL.filter(p => !names.has(p.name)).map(p => ({ ...p, stars:0, url:'', topics:[] }));
+  return gh.concat(loc);
+}
+
+function visible(){
+  let list = S.projects || [];
+  if (S.filter !== 'all') list = list.filter(p => p.status === S.filter);
+  if (S.q){
+    const q = norm(S.q);
+    list = list.filter(p => norm(p.name).includes(q) || norm(p.blurb).includes(q) ||
+      norm(p.lang).includes(q) || (p.topics||[]).some(t => norm(t).includes(q)));
+  }
+  const by = {
+    featured:(a,b) => (a.featured - b.featured) || a.name.localeCompare(b.name),
+    name:(a,b) => a.name.localeCompare(b.name),
+    stars:(a,b) => (b.stars - a.stars) || a.name.localeCompare(b.name),
+    updated:(a,b) => String(b.updated).localeCompare(String(a.updated))
+  }[S.sort];
+  return list.slice().sort(by);
+}
+
+function card(p){
+  const tag = p.status === 'github' ? 'on github' : 'local';
+  // Only render metadata fields that actually have a value — an em-dash row
+  // reads as "missing data" and looks unfinished.
+  const meta = [];
+  if (p.lang && p.lang !== '—')    meta.push(`<span><span class="k">lang</span> ${esc(p.lang)}</span>`);
+  if (p.size && p.size !== '—')    meta.push(`<span><span class="k">size</span> ${esc(p.size)}</span>`);
+  if (p.license && p.license !== '—') meta.push(`<span><span class="k">license</span> ${esc(p.license)}</span>`);
+  if (p.updated)                   meta.push(`<span><span class="k">updated</span> ${esc(timeAgo(p.updated))}</span>`);
+
+  const body = `
+    <div class="card-top">
+      <span class="card-ico" aria-hidden="true">${esc(p.ico)}</span>
+      <span style="min-width:0;flex:1">
+        <span class="card-name">${esc(p.name)} <span class="arw">→</span></span>
+        ${p.lang && p.lang !== '—' ? `<span class="card-sub">${esc(p.lang)}${p.stars ? ' · ★ ' + p.stars : ''}</span>` : ''}
+      </span>
+      <span class="pill ${p.status}">${tag}</span>
+    </div>
+    <p class="card-desc">${esc(p.blurb)}</p>
+    ${meta.length ? `<div class="card-foot">${meta.join('')}</div>` : ''}
+    ${p.install ? `<div class="cmd" data-cmd="${esc(p.install)}">
+        <code>${esc(p.install)}</code><button class="cp" type="button">copy</button></div>` : ''}`;
+  return p.url
+    ? `<a class="card rv" href="${esc(p.url)}" target="_blank" rel="noopener noreferrer">${body}</a>`
+    : `<article class="card rv" tabindex="0">${body}</article>`;
+}
+
+function render(){
+  const list = visible();
+  const g = $('#grid');
+  g.className = 'grid' + (S.view === 'list' ? ' list' : '');
+  g.innerHTML = list.map(card).join('');
+  $('#count').textContent = S.loading ? 'loading…' : list.length + (list.length === 1 ? ' tool' : ' tools');
+  $('#empty').innerHTML = (!S.loading && !list.length) ? `
+    <div class="empty">
+      <h3>Nothing matches${S.q ? ` “${esc(S.q)}”` : ''}</h3>
+      <p>Try <code>adb</code>, <code>python</code>, <code>kotlin</code> — or
+      <button style="color:var(--accent);border:0;background:none;font:inherit;cursor:pointer"
+        onclick="resetAll()">clear the filters</button>.</p>
+    </div>` : '';
+  reveal(); syncURL(); updateStats();
+}
+
+function updateStats(){
+  const all = S.projects || [];
+  const gh = all.filter(p => p.status === 'github');
+  const langs = new Set(all.map(p => p.lang).filter(l => l && l !== '—'));
+  const oss = all.filter(p => p.status === 'github' || (p.license && p.license !== '—')).length;
+  const put = (id,v) => { const el=$(id); if (el && el.textContent !== String(v)) el.textContent = v; };
+  put('#s1', all.length); put('#s2', gh.length); put('#s3', langs.size); put('#s4', oss);
+}
+
+async function loadRepos(){
+  try{
+    const c = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
+    if (c && Date.now()-c.t < CACHE_TTL && Array.isArray(c.d) && c.d.length){
+      S.repos = c.d; S.source='cache'; S.projects = build(); S.loading=false; render(); markLive(); return;
+    }
+  }catch(e){}
+
+  try{
+    const res = await fetch(`https://api.github.com/users/${GH_USER}/repos?per_page=100&sort=pushed`,
+      { headers:{ 'Accept':'application/vnd.github+json' } });
+    if (!res.ok) throw new Error('HTTP '+res.status);
+    const raw = await res.json();
+    const own = raw.filter(r => !r.fork && !r.archived).map(r => ({
+      name:r.name, description:r.description, language:r.language,
+      stargazers_count:r.stargazers_count, pushed_at:r.pushed_at, updated_at:r.updated_at,
+      html_url:r.html_url, size:r.size, license:r.license, topics:r.topics || []
+    }));
+    S.repos = own; S.source = 'live';
+    try{ localStorage.setItem(CACHE_KEY, JSON.stringify({ t:Date.now(), d:own })); }catch(e){}
+  }catch(err){
+    try{
+      const c = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
+      if (c && Array.isArray(c.d) && c.d.length){ S.repos=c.d; S.source='cache'; }
+      else { S.repos=EMBEDDED; S.source='embedded'; }
+    }catch(e){ S.repos=EMBEDDED; S.source='embedded'; }
+  }
+  S.projects = build(); S.loading = false; render(); markLive();
+}
+
+function markLive(){
+  const el = $('#liveTxt');
+  const gh = (S.projects||[]).filter(p => p.status==='github').length;
+  if (S.source==='live')       el.textContent = `${gh} repos live from github`;
+  else if (S.source==='cache') el.textContent = `${gh} repos · cached`;
+  else                         el.textContent = 'showing bundled list';
+}
+
+$$('.seg').forEach(b => b.addEventListener('click', () => {
+  S.filter = b.dataset.f;
+  $$('.seg').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+  render();
+}));
+$('#sort').addEventListener('change', e => { S.sort = e.target.value; render(); });
+$('#view').addEventListener('change', e => { S.view = e.target.value; render(); });
+
+document.addEventListener('click', e => {
+  const b = e.target.closest('.cp'); if (!b) return;
+  const host = b.closest('.cmd'); const text = host ? host.dataset.cmd : '';
+  if (!text) return;
+  navigator.clipboard.writeText(text).then(() => {
+    b.textContent='copied'; b.classList.add('done');
+    setTimeout(() => { b.textContent='copy'; b.classList.remove('done'); }, 1500);
+    toast('Copied to clipboard');
+  }).catch(() => toast('Copy failed — select manually'));
+});
+
+function setTheme(t){
+  document.documentElement.setAttribute('data-theme', t);
+  $('#icoSun').style.display  = t === 'dark' ? '' : 'none';
+  $('#icoMoon').style.display = t === 'dark' ? 'none' : '';
+  try{ localStorage.setItem('rh55-theme', t); }catch(e){}
+}
+$('#theme').addEventListener('click', () => {
+  setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+});
+
+document.addEventListener('pointermove', e => {
+  const c = e.target.closest('.card'); if (!c) return;
+  const r = c.getBoundingClientRect();
+  c.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+  c.style.setProperty('--my', (e.clientY - r.top) + 'px');
+}, { passive:true });
+
+function onScroll(){
+  const y = window.scrollY;
+  $('#nav').classList.toggle('stuck', y > 12);
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  $('#prog').style.width = (h > 0 ? (y/h)*100 : 0) + '%';
+}
+window.addEventListener('scroll', onScroll, { passive:true });
+
+let io;
+function reveal(){
+  if (!('IntersectionObserver' in window)){ $$('.rv').forEach(e => e.classList.add('in')); return; }
+  if (io) io.disconnect();
+  io = new IntersectionObserver(es => {
+    es.forEach(en => { if (en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+  }, { rootMargin:'0px 0px -8% 0px', threshold:.06 });
+  $$('.rv:not(.in)').forEach((el,i) => {
+    el.style.transitionDelay = Math.min(i*26, 200) + 'ms';
+    io.observe(el);
+  });
+}
+
+const cp = { open:false, i:0, items:[] };
+function cpActions(){
+  const a = [
+    { t:'Toggle theme', s:'action', ic:'◐', run:() => $('#theme').click() },
+    { t:'Copy GitHub profile URL', s:'action', ic:'⧉', run:() =>
+        navigator.clipboard.writeText(`https://github.com/${GH_USER}`).then(() => toast('Profile URL copied')) },
+    { t:'Go to About', s:'action', ic:'↓', run:() => { closeCP(); $('#about').scrollIntoView({block:'start'}); } },
+    { t:'Open GitHub profile', s:'action', ic:'↗', run:() => { closeCP(); window.open(`https://github.com/${GH_USER}`,'_blank','noopener'); } },
+    { t:'Show all tools', s:'action', ic:'∗', run:() => { closeCP(); resetAll(); } },
+    { t:'Show only on-GitHub tools', s:'action', ic:'⌥', run:() => { closeCP(); S.filter='github'; $$('.seg').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.f==='github'))); render(); } },
+    { t:'Show only local tools', s:'action', ic:'⌥', run:() => { closeCP(); S.filter='local'; $$('.seg').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.f==='local'))); render(); } }
+  ];
+  const p = (S.projects||[]).map(x => ({
+    t:x.name, s:x.status==='github' ? 'repo' : 'local', ic:x.ico || '·',
+    run:() => {
+      closeCP();
+      if (x.url) window.open(x.url,'_blank','noopener');
+      else { S.q = x.name; S.filter='all';
+        $$('.seg').forEach(y=>y.setAttribute('aria-pressed',String(y.dataset.f==='all')));
+        render(); toast('Filtered to ' + x.name); }
+    }
+  }));
+  return p.concat(a);
+}
+function cpRender(){
+  const q = norm($('#cpInput').value);
+  const all = cpActions();
+  cp.items = q ? all.filter(x => norm(x.t).includes(q) || norm(x.s).includes(q)) : all;
+  cp.i = Math.min(cp.i, Math.max(0, cp.items.length - 1));
+  if (!cp.items.length){ $('#cpList').innerHTML = `<div class="cp-sec">no matches</div>`; return; }
+  const groups = {};
+  cp.items.forEach((x,i) => (groups[x.s] = groups[x.s] || []).push({ ...x, i }));
+  $('#cpList').innerHTML = Object.entries(groups).map(([sec,items]) => `
+    <div class="cp-sec">${esc(sec)}</div>
+    ${items.map(x => `<button class="cp-item${x.i===cp.i?' on':''}" data-i="${x.i}" type="button">
+        <span class="ic">${esc(x.ic)}</span><span class="t">${esc(x.t)}</span>
+        <span class="s">${esc(x.s)}</span></button>`).join('')}`).join('');
+}
+function openCP(){
+  cp.open = true; cp.i = 0; $('#cpBack').classList.add('open');
+  $('#cpInput').value = ''; cpRender();
+  setTimeout(() => $('#cpInput').focus(), 40);
+}
+function closeCP(){ cp.open = false; $('#cpBack').classList.remove('open'); }
+$('#openSearch').addEventListener('click', openCP);
+$('#cpBack').addEventListener('click', e => { if (e.target.id === 'cpBack') closeCP(); });
+$('#cpInput').addEventListener('input', () => { cp.i = 0; cpRender(); });
+$('#cpList').addEventListener('click', e => {
+  const b = e.target.closest('.cp-item'); if (!b) return;
+  const it = cp.items[+b.dataset.i]; if (it) it.run();
+});
+document.addEventListener('keydown', e => {
+  const k = e.key.toLowerCase();
+  if ((e.metaKey || e.ctrlKey) && k === 'k'){ e.preventDefault(); cp.open ? closeCP() : openCP(); return; }
+  if (k === 'escape' && cp.open){ closeCP(); return; }
+  if (!cp.open){
+    if (k === '/' && !/input|textarea|select/i.test(document.activeElement.tagName)){
+      e.preventDefault(); openCP();
+    }
+    return;
+  }
+  if (k === 'arrowdown'){ e.preventDefault(); cp.i = (cp.i+1) % cp.items.length; cpRender(); scrollCP(); }
+  else if (k === 'arrowup'){ e.preventDefault(); cp.i = (cp.i-1+cp.items.length) % cp.items.length; cpRender(); scrollCP(); }
+  else if (k === 'enter'){ e.preventDefault(); const it = cp.items[cp.i]; if (it) it.run(); }
+});
+function scrollCP(){ const el = $('#cpList .cp-item.on'); if (el) el.scrollIntoView({ block:'nearest' }); }
+
+function syncURL(){
+  if (!history.replaceState) return;
+  const p = new URLSearchParams();
+  if (S.filter !== 'all') p.set('f', S.filter);
+  if (S.sort !== 'featured') p.set('s', S.sort);
+  if (S.view !== 'grid') p.set('v', S.view);
+  if (S.q) p.set('q', S.q);
+  const qs = p.toString();
+  history.replaceState(null, '', qs ? '?' + qs : location.pathname);
+}
+function readURL(){
+  const p = new URLSearchParams(location.search);
+  if (p.get('f')) S.filter = p.get('f');
+  if (p.get('s')) S.sort = p.get('s');
+  if (p.get('v')) S.view = p.get('v');
+  if (p.get('q')) S.q = p.get('q');
+  $$('.seg').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.f === S.filter)));
+  $('#sort').value = S.sort; $('#view').value = S.view;
+}
+window.resetAll = function(){
+  S.filter='all'; S.q=''; S.sort='featured';
+  $$('.seg').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.f === 'all')));
+  $('#sort').value = 'featured';
+  render();
+};
+
+(function boot(){
+  let t = 'dark';
+  try{ t = localStorage.getItem('rh55-theme') || 'dark'; }catch(e){}
+  setTheme(t);
+  $('#yr').textContent = new Date().getFullYear();
+  readURL();
+  S.loading = true; render(); onScroll();
+  loadRepos();
+})();
+</script>
+</body>
+</html>

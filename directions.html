@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en" data-direction="terminal">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ROBINHOOD55 — Tools & Projects</title>
+<meta name="description" content="ROBINHOOD55 — open tools for Android automation, wireless ADB, file transfer and offline apps. Shell, Python, Kotlin.">
+<style>
+/* ============================================================
+   ROBINHOOD55 — tools page
+   Three design directions in one file. Switch with the bar at top.
+   A: Terminal   B: Editorial   C: Blueprint
+   ============================================================ */
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0}
+
+/* ---------- shared data ---------- */
+:root{
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --sans:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --serif:"IBM Plex Serif",Georgia,"Times New Roman",serif;
+}
+
+/* ============================================================
+   DIRECTION A — TERMINAL  (dark, mono, amber)
+   surface: Explore (a catalog you scan), not a marketing hero
+   ============================================================ */
+[data-direction="terminal"]{
+  --bg:#0b0d0e;
+  --bg-2:#111416;
+  --line:#1e2528;
+  --ink:#e8edee;
+  --ink-2:#9aa6a9;
+  --ink-3:#5f6c70;
+  --accent:#ffa23a;
+  --accent-dim:#7a4d15;
+  --ok:#57d38c;
+  --warn:#e0b341;
+  --radius:3px;
+}
+[data-direction="terminal"] body{
+  background:var(--bg);color:var(--ink);
+  font-family:var(--sans);
+  font-size:15px;line-height:1.6;
+  padding:0 0 80px;
+}
+[data-direction="terminal"] .wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+
+[data-direction="terminal"] .masthead{
+  border-bottom:1px solid var(--line);
+  padding:64px 0 40px;
+}
+[data-direction="terminal"] .prompt{
+  font-family:var(--mono);font-size:12.5px;color:var(--ink-3);
+  letter-spacing:.02em;margin:0 0 26px;
+}
+[data-direction="terminal"] .prompt b{color:var(--accent);font-weight:500}
+[data-direction="terminal"] h1{
+  font-family:var(--mono);font-weight:500;
+  font-size:clamp(30px,5.2vw,52px);line-height:1.08;
+  letter-spacing:-.02em;margin:0 0 18px;
+}
+[data-direction="terminal"] h1 .caret{
+  display:inline-block;width:.55em;height:1em;background:var(--accent);
+  vertical-align:-.12em;margin-left:.12em;
+  animation:blink 1.15s steps(1,end) infinite;
+}
+@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+@media (prefers-reduced-motion:reduce){
+  [data-direction="terminal"] h1 .caret{animation:none}
+}
+[data-direction="terminal"] .lede{
+  color:var(--ink-2);max-width:62ch;margin:0;font-size:16px;
+}
+[data-direction="terminal"] .lede code{
+  font-family:var(--mono);font-size:.9em;color:var(--accent);
+  background:var(--bg-2);padding:1px 5px;border-radius:2px;
+}
+
+[data-direction="terminal"] .filters{
+  display:flex;flex-wrap:wrap;gap:8px;align-items:center;
+  padding:22px 0 0;
+}
+[data-direction="terminal"] .flabel{
+  font-family:var(--mono);font-size:11px;color:var(--ink-3);
+  text-transform:uppercase;letter-spacing:.14em;margin-right:6px;
+}
+[data-direction="terminal"] .chip{
+  font-family:var(--mono);font-size:12px;
+  background:none;color:var(--ink-2);
+  border:1px solid var(--line);border-radius:2px;
+  padding:4px 11px;cursor:pointer;
+  transition:border-color .14s,color .14s,background .14s;
+}
+[data-direction="terminal"] .chip:hover{border-color:var(--ink-3);color:var(--ink)}
+[data-direction="terminal"] .chip[aria-pressed="true"]{
+  background:var(--accent);border-color:var(--accent);color:#0b0d0e;font-weight:500;
+}
+[data-direction="terminal"] .chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+[data-direction="terminal"] .catalog{margin-top:34px;border-top:1px solid var(--line)}
+[data-direction="terminal"] .row{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 210px;
+  gap:6px 30px;
+  padding:22px 0;
+  border-bottom:1px solid var(--line);
+  text-decoration:none;color:inherit;
+  transition:background .13s;
+  position:relative;
+}
+[data-direction="terminal"] .row::before{
+  content:"";position:absolute;left:-28px;top:0;bottom:0;width:2px;
+  background:var(--accent);transform:scaleY(0);transform-origin:top;
+  transition:transform .16s ease;
+}
+[data-direction="terminal"] .row:hover{background:var(--bg-2)}
+[data-direction="terminal"] .row:hover::before{transform:scaleY(1)}
+[data-direction="terminal"] .row:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+[data-direction="terminal"] .rname{
+  font-family:var(--mono);font-size:17px;font-weight:500;
+  color:var(--ink);margin:0 0 7px;letter-spacing:-.01em;
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+}
+[data-direction="terminal"] .rname .arrow{color:var(--accent);opacity:0;transition:opacity .14s,transform .14s;transform:translateX(-4px)}
+[data-direction="terminal"] .row:hover .arrow{opacity:1;transform:translateX(0)}
+[data-direction="terminal"] .rdesc{color:var(--ink-2);margin:0;font-size:14.5px;max-width:64ch}
+[data-direction="terminal"] .meta{
+  font-family:var(--mono);font-size:12px;color:var(--ink-3);
+  display:flex;flex-direction:column;gap:5px;
+  justify-content:flex-start;padding-top:3px;
+}
+[data-direction="terminal"] .meta span{display:flex;gap:8px}
+[data-direction="terminal"] .meta i{font-style:normal;color:var(--ink-3);min-width:62px;opacity:.65}
+
+[data-direction="terminal"] .tag{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;
+  text-transform:uppercase;padding:2px 7px;border-radius:2px;
+  border:1px solid var(--line);color:var(--ink-3);
+}
+[data-direction="terminal"] .tag.live{color:var(--ok);border-color:#1d4a33}
+[data-direction="terminal"] .tag.local{color:var(--warn);border-color:#4a3d15}
+
+[data-direction="terminal"] .foot{
+  margin-top:44px;padding-top:22px;border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:12px;color:var(--ink-3);
+  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+}
+[data-direction="terminal"] .foot a{color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--line)}
+[data-direction="terminal"] .foot a:hover{color:var(--accent);border-color:var(--accent)}
+
+/* ============================================================
+   DIRECTION B — EDITORIAL  (light, serif, magazine)
+   ============================================================ */
+[data-direction="editorial"]{
+  --bg:#fbfaf7;
+  --bg-2:#f3f1ea;
+  --line:#ded9cc;
+  --ink:#1a1a17;
+  --ink-2:#5c5a52;
+  --ink-3:#8f8c81;
+  --accent:#9a3412;
+  --ok:#15803d;
+  --warn:#a16207;
+}
+[data-direction="editorial"] body{
+  background:var(--bg);color:var(--ink);
+  font-family:var(--serif);font-size:17px;line-height:1.68;
+  padding:0 0 90px;
+}
+[data-direction="editorial"] .wrap{max-width:760px;margin:0 auto;padding:0 28px}
+
+[data-direction="editorial"] .masthead{padding:76px 0 46px}
+[data-direction="editorial"] .kicker{
+  font-family:var(--sans);font-size:11.5px;font-weight:600;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--accent);
+  margin:0 0 22px;
+}
+[data-direction="editorial"] h1{
+  font-size:clamp(34px,6vw,58px);line-height:1.06;font-weight:400;
+  letter-spacing:-.02em;margin:0 0 22px;text-wrap:balance;
+}
+[data-direction="editorial"] h1 em{font-style:italic;color:var(--accent)}
+[data-direction="editorial"] .lede{
+  font-size:19px;color:var(--ink-2);margin:0;max-width:58ch;line-height:1.62;
+}
+[data-direction="editorial"] .rule{
+  height:1px;background:var(--line);margin:0;border:0;
+}
+
+[data-direction="editorial"] .filters{
+  display:flex;flex-wrap:wrap;gap:0 20px;align-items:baseline;
+  padding:26px 0 24px;border-bottom:1px solid var(--line);
+}
+[data-direction="editorial"] .flabel{
+  font-family:var(--sans);font-size:11px;font-weight:600;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);
+  margin-right:4px;
+}
+[data-direction="editorial"] .chip{
+  font-family:var(--sans);font-size:13px;background:none;border:0;
+  color:var(--ink-3);cursor:pointer;padding:2px 0;
+  border-bottom:1.5px solid transparent;transition:color .14s,border-color .14s;
+}
+[data-direction="editorial"] .chip:hover{color:var(--ink)}
+[data-direction="editorial"] .chip[aria-pressed="true"]{color:var(--accent);border-color:var(--accent)}
+[data-direction="editorial"] .chip:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+[data-direction="editorial"] .catalog{padding-top:6px}
+[data-direction="editorial"] .row{
+  display:grid;grid-template-columns:88px minmax(0,1fr);
+  gap:24px;padding:30px 0;border-bottom:1px solid var(--line);
+  text-decoration:none;color:inherit;transition:opacity .14s;
+}
+[data-direction="editorial"] .row:hover{opacity:.72}
+[data-direction="editorial"] .row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+[data-direction="editorial"] .idx{
+  font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:.1em;
+  color:var(--ink-3);padding-top:6px;
+}
+[data-direction="editorial"] .rname{
+  font-size:24px;font-weight:400;margin:0 0 8px;letter-spacing:-.01em;
+  display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;
+}
+[data-direction="editorial"] .rdesc{color:var(--ink-2);margin:0 0 12px;font-size:16.5px}
+[data-direction="editorial"] .meta{
+  font-family:var(--sans);font-size:12.5px;color:var(--ink-3);
+  display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;
+}
+[data-direction="editorial"] .meta i{font-style:normal}
+[data-direction="editorial"] .dot{color:var(--line)}
+[data-direction="editorial"] .tag{
+  font-family:var(--sans);font-size:11px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;
+}
+[data-direction="editorial"] .tag.live{color:var(--ok)}
+[data-direction="editorial"] .tag.local{color:var(--warn)}
+
+[data-direction="editorial"] .foot{
+  margin-top:52px;padding-top:26px;border-top:1px solid var(--line);
+  font-family:var(--sans);font-size:13.5px;color:var(--ink-3);
+  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+}
+[data-direction="editorial"] .foot a{color:var(--accent);text-decoration:none;border-bottom:1px solid currentColor}
+
+/* ============================================================
+   DIRECTION C — BLUEPRINT  (dark, technical drawing, cyan grid)
+   ============================================================ */
+[data-direction="blueprint"]{
+  --bg:#071016;
+  --bg-2:#0b1a22;
+  --line:#14313d;
+  --line-2:#1d4453;
+  --ink:#dceaf0;
+  --ink-2:#8fb0bd;
+  --ink-3:#4d7383;
+  --accent:#4fd1e0;
+  --accent-dim:#164e58;
+  --ok:#5ee6a8;
+  --warn:#f0c04a;
+}
+[data-direction="blueprint"] body{
+  background-color:var(--bg);
+  background-image:
+    linear-gradient(var(--line) 1px,transparent 1px),
+    linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:34px 34px;
+  background-position:-1px -1px;
+  color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6;
+  padding:0 0 80px;
+}
+[data-direction="blueprint"] .wrap{max-width:1140px;margin:0 auto;padding:0 26px}
+
+[data-direction="blueprint"] .masthead{
+  margin:34px 0 0;padding:44px 40px;
+  border:1px solid var(--line-2);background:rgba(7,16,22,.9);
+  position:relative;
+}
+[data-direction="blueprint"] .masthead::before,
+[data-direction="blueprint"] .masthead::after{
+  content:"";position:absolute;width:13px;height:13px;
+  border:1px solid var(--accent);opacity:.75;
+}
+[data-direction="blueprint"] .masthead::before{top:-1px;left:-1px;border-right:0;border-bottom:0}
+[data-direction="blueprint"] .masthead::after{bottom:-1px;right:-1px;border-left:0;border-top:0}
+[data-direction="blueprint"] .sheet{
+  font-family:var(--mono);font-size:11px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--ink-3);
+  display:flex;gap:22px;flex-wrap:wrap;margin:0 0 26px;
+}
+[data-direction="blueprint"] .sheet b{color:var(--accent);font-weight:400}
+[data-direction="blueprint"] h1{
+  font-size:clamp(28px,4.6vw,46px);line-height:1.1;font-weight:600;
+  letter-spacing:-.02em;margin:0 0 16px;
+}
+[data-direction="blueprint"] h1 span{color:var(--accent)}
+[data-direction="blueprint"] .lede{color:var(--ink-2);max-width:66ch;margin:0}
+
+[data-direction="blueprint"] .filters{
+  display:flex;flex-wrap:wrap;gap:8px;align-items:center;
+  margin:26px 0 0;
+}
+[data-direction="blueprint"] .flabel{
+  font-family:var(--mono);font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-3);margin-right:6px;
+}
+[data-direction="blueprint"] .chip{
+  font-family:var(--mono);font-size:12px;
+  background:rgba(7,16,22,.85);color:var(--ink-2);
+  border:1px solid var(--line-2);padding:5px 12px;cursor:pointer;
+  transition:all .14s;
+}
+[data-direction="blueprint"] .chip:hover{border-color:var(--accent);color:var(--ink)}
+[data-direction="blueprint"] .chip[aria-pressed="true"]{
+  background:var(--accent-dim);border-color:var(--accent);color:var(--accent);
+}
+[data-direction="blueprint"] .chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+[data-direction="blueprint"] .catalog{
+  margin-top:26px;
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));
+  gap:1px;background:var(--line-2);
+  border:1px solid var(--line-2);
+}
+[data-direction="blueprint"] .row{
+  background:rgba(7,16,22,.92);
+  padding:26px 24px 22px;
+  text-decoration:none;color:inherit;
+  display:flex;flex-direction:column;gap:12px;
+  transition:background .14s;position:relative;
+}
+[data-direction="blueprint"] .row:hover{background:var(--bg-2)}
+[data-direction="blueprint"] .row:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+[data-direction="blueprint"] .rhead{
+  display:flex;justify-content:space-between;align-items:flex-start;gap:14px;
+}
+[data-direction="blueprint"] .rname{
+  font-family:var(--mono);font-size:16.5px;font-weight:500;margin:0;
+  letter-spacing:-.01em;color:var(--ink);
+}
+[data-direction="blueprint"] .rdesc{color:var(--ink-2);margin:0;font-size:14px;flex:1}
+[data-direction="blueprint"] .spec{
+  font-family:var(--mono);font-size:11.5px;color:var(--ink-3);
+  border-top:1px dashed var(--line-2);padding-top:11px;
+  display:flex;flex-wrap:wrap;gap:4px 16px;
+}
+[data-direction="blueprint"] .spec i{font-style:normal;color:var(--ink-3);opacity:.7}
+[data-direction="blueprint"] .tag{
+  font-family:var(--mono);font-size:10px;letter-spacing:.1em;
+  text-transform:uppercase;padding:3px 8px;border:1px solid var(--line-2);
+  color:var(--ink-3);white-space:nowrap;
+}
+[data-direction="blueprint"] .tag.live{color:var(--ok);border-color:#1b4c3a}
+[data-direction="blueprint"] .tag.local{color:var(--warn);border-color:#4c3f1b}
+
+[data-direction="blueprint"] .foot{
+  margin-top:30px;padding:22px 26px;
+  border:1px solid var(--line-2);background:rgba(7,16,22,.9);
+  font-family:var(--mono);font-size:12px;color:var(--ink-3);
+  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+}
+[data-direction="blueprint"] .foot a{color:var(--accent);text-decoration:none}
+
+/* ============================================================
+   switcher (chrome, not part of the design)
+   ============================================================ */
+#switcher{
+  position:fixed;top:0;left:0;right:0;z-index:99;
+  background:#000;border-bottom:1px solid #2a2a2a;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;
+  display:flex;align-items:center;gap:4px;
+  padding:7px 12px;overflow-x:auto;
+}
+#switcher .lb{color:#666;margin-right:8px;white-space:nowrap}
+#switcher button{
+  background:#151515;color:#bbb;border:1px solid #2e2e2e;
+  padding:4px 12px;cursor:pointer;white-space:nowrap;
+  font-family:inherit;font-size:12px;
+}
+#switcher button:hover{color:#fff;border-color:#555}
+#switcher button[aria-pressed="true"]{background:#e8edee;color:#000;border-color:#e8edee}
+body{padding-top:40px !important}
+
+@media (max-width:720px){
+  [data-direction="terminal"] .row{grid-template-columns:1fr}
+  [data-direction="terminal"] .meta{flex-direction:row;flex-wrap:wrap;gap:12px;padding-top:10px}
+  [data-direction="editorial"] .row{grid-template-columns:1fr;gap:8px}
+  [data-direction="editorial"] .idx{padding-top:0}
+}
+</style>
+</head>
+<body>
+
+<nav id="switcher" aria-label="design direction">
+  <span class="lb">design:</span>
+  <button data-set="terminal" aria-pressed="true">A · Terminal</button>
+  <button data-set="editorial" aria-pressed="false">B · Editorial</button>
+  <button data-set="blueprint" aria-pressed="false">C · Blueprint</button>
+</nav>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <!-- A -->
+    <p class="prompt" data-only="terminal"><b>$</b> whoami &nbsp;→&nbsp; robinhood55 &nbsp;·&nbsp; <b>$</b> ls tools/</p>
+
+    <!-- B -->
+    <p class="kicker" data-only="editorial">Tools &amp; Projects — ROBINHOOD55</p>
+
+    <!-- C -->
+    <p class="sheet" data-only="blueprint">
+      <span>sheet <b>01</b></span><span>rev <b>2026.10</b></span><span>scale <b>1:1</b></span><span>author <b>ROBINHOOD55</b></span>
+    </p>
+
+    <h1 data-only="terminal">Tools I build,<br>and why.<span class="caret"></span></h1>
+    <h1 data-only="editorial">Small tools that <em>remove</em> a cable, a step, a wait.</h1>
+    <h1 data-only="blueprint">Tooling &amp; <span>automation</span> for Android, Linux and the web.</h1>
+
+    <p class="lede" data-only="terminal">
+      Wireless ADB, phone-to-PC transfer, offline chat. Mostly <code>shell</code>,
+      <code>python</code> and <code>kotlin</code> — built to kill one annoying
+      manual step at a time.
+    </p>
+    <p class="lede" data-only="editorial">
+      I write tools that delete friction: a cable you no longer need, a step you
+      no longer repeat, a wait you no longer sit through. Shell, Python and
+      Kotlin, mostly for Android and Linux.
+    </p>
+    <p class="lede" data-only="blueprint">
+      A working catalog of utilities for wireless Android control, device file
+      transfer and offline-first apps. Built and tested on Kali Linux.
+    </p>
+  </header>
+
+  <div class="filters" role="group" aria-label="filter by status">
+    <span class="flabel">filter</span>
+    <button class="chip" data-filter="all" aria-pressed="true">all</button>
+    <button class="chip" data-filter="live" aria-pressed="false">on github</button>
+    <button class="chip" data-filter="local" aria-pressed="false">local</button>
+  </div>
+
+  <main class="catalog" id="catalog"><!-- filled by JS --></main>
+
+  <footer class="foot">
+    <span data-only="terminal">// MIT-licensed where noted · built on Kali Linux</span>
+    <span data-only="editorial">Open source, MIT-licensed where noted.</span>
+    <span data-only="blueprint">LICENSE: MIT (per repo) · PLATFORM: Linux / Android</span>
+    <span><a href="https://github.com/pktradingview3-ops">github.com/pktradingview3-ops</a></span>
+  </footer>
+
+</div>
+
+<script>
+/* ---------- real project data (no invented metrics) ---------- */
+const PROJECTS = [
+  {
+    name: "android-tcp",
+    desc: "Wireless ADB & scrcpy for any Android phone — one command to enable adb over Wi-Fi (adb tcpip 5555 / adb connect), plus a udev rule that re-arms it on plug-in.",
+    lang: "Shell",
+    size: "459 lines",
+    license: "MIT",
+    status: "live",
+    url: "https://github.com/pktradingview3-ops/android-tcp"
+  },
+  {
+    name: "wifi-file-transfer",
+    desc: "Move files between a computer and any phone over the same Wi-Fi network — no cable, no app install, no USB debugging. The phone just opens a web page.",
+    lang: "Python",
+    size: "299 lines",
+    license: "—",
+    status: "local",
+    url: ""
+  },
+  {
+    name: "offline-chat-app",
+    desc: "Offline peer-to-peer chat across Android and web over WebRTC — no server, no internet required on the local link. Kotlin app plus a web client.",
+    lang: "Kotlin / Web",
+    size: "Android + web",
+    license: "—",
+    status: "local",
+    url: ""
+  },
+  {
+    name: "DailyBookAndroid",
+    desc: "Jetpack Compose ledger for daily entries — signed release build, changelog, security notes and a written test guide.",
+    lang: "Kotlin",
+    size: "Compose",
+    license: "—",
+    status: "local",
+    url: ""
+  },
+  {
+    name: "trading-journal",
+    desc: "Product spec and data model for a trading journal — PDR and data dictionary as versioned HTML and Markdown.",
+    lang: "Docs",
+    size: "PDR v1.0",
+    license: "—",
+    status: "local",
+    url: ""
+  }
+];
+
+/* ---------- render ---------- */
+const catalog = document.getElementById('catalog');
+let filter = 'all';
+
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+const tagText = s => s === 'live' ? 'on github' : 'local';
+const dir = () => document.documentElement.getAttribute('data-direction');
+
+function render(){
+  const list = PROJECTS.filter(p => filter === 'all' || p.status === filter);
+  const d = dir();
+
+  catalog.innerHTML = list.map((p,i) => {
+    const inner = d === 'editorial' ? `
+      <span class="idx">${String(i+1).padStart(2,'0')}</span>
+      <span>
+        <span class="rname">${esc(p.name)} <span class="tag ${p.status}">${tagText(p.status)}</span></span>
+        <p class="rdesc">${esc(p.desc)}</p>
+        <span class="meta">
+          <i>${esc(p.lang)}</i><span class="dot">·</span>
+          <i>${esc(p.size)}</i><span class="dot">·</span>
+          <i>${p.license === '—' ? 'license n/a' : esc(p.license)}</i>
+        </span>
+      </span>`
+    : d === 'blueprint' ? `
+      <span class="rhead">
+        <span class="rname">${esc(p.name)}</span>
+        <span class="tag ${p.status}">${tagText(p.status)}</span>
+      </span>
+      <p class="rdesc">${esc(p.desc)}</p>
+      <span class="spec">
+        <span><i>lang</i> ${esc(p.lang)}</span>
+        <span><i>size</i> ${esc(p.size)}</span>
+        <span><i>lic</i> ${esc(p.license)}</span>
+      </span>`
+    : `
+      <span>
+        <span class="rname">${esc(p.name)} <span class="arrow">→</span> <span class="tag ${p.status}">${tagText(p.status)}</span></span>
+        <p class="rdesc">${esc(p.desc)}</p>
+      </span>
+      <span class="meta">
+        <span><i>lang</i>${esc(p.lang)}</span>
+        <span><i>size</i>${esc(p.size)}</span>
+        <span><i>license</i>${esc(p.license)}</span>
+      </span>`;
+
+    const href = p.url || '#';
+    const attrs = p.url ? `href="${esc(p.url)}"` : `href="#" aria-disabled="true"`;
+    return `<a class="row" ${attrs}>${inner}</a>`;
+  }).join('') || `<p style="padding:26px 0;color:var(--ink-3);font-family:var(--mono)">no projects match this filter.</p>`;
+}
+
+/* ---------- switcher ---------- */
+const sw = document.getElementById('switcher');
+function setDirection(v){
+  document.documentElement.setAttribute('data-direction', v);
+  sw.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.set === v)));
+  document.querySelectorAll('[data-only]').forEach(el => {
+    el.style.display = el.dataset.only === v ? '' : 'none';
+  });
+  try{ localStorage.setItem('rh55-direction', v) }catch(e){}
+  render();
+}
+sw.addEventListener('click', e => { const b = e.target.closest('button'); if(b) setDirection(b.dataset.set); });
+
+/* ---------- filters ---------- */
+document.querySelector('.filters').addEventListener('click', e => {
+  const b = e.target.closest('.chip'); if(!b) return;
+  filter = b.dataset.filter;
+  document.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', String(c === b)));
+  render();
+});
+
+/* ---------- init ---------- */
+let saved = 'terminal';
+try{ saved = localStorage.getItem('rh55-direction') || 'terminal' }catch(e){}
+/* allow ?d=editorial or #editorial for direct links / screenshots */
+try{
+  const q = new URLSearchParams(location.search).get('d');
+  const h = location.hash.replace('#','');
+  if(['terminal','editorial','blueprint'].includes(q)) saved = q;
+  else if(['terminal','editorial','blueprint'].includes(h)) saved = h;
+}catch(e){}
+setDirection(saved);
+</script>
+</body>
+</html>
