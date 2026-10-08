@@ -423,8 +423,8 @@ footer .row{display:flex;gap:18px;flex-wrap:wrap}
 'use strict';
 /* =========================================================================
    DATA
-   The two published repos are fetched live from the GitHub API; local
-   projects are declared here because they are not published yet.
+   Published repos are fetched live from the GitHub API; local projects are
+   declared here because they are not published yet.
    ========================================================================= */
 const GH_USER = 'pktradingview3-ops';
 const CACHE_KEY = 'rh55-repos-v1';
@@ -440,13 +440,15 @@ const FEATURED = {
     ico: '=', featured: 2,
     blurb: 'Smart calculator — a small, focused utility for everyday arithmetic.',
     install: ''
+  },
+  'wifi-file-transfer': {
+    ico: '⇄', featured: 3,
+    blurb: 'Move files between a computer and any phone over the browser — no cable, no app install, no USB debugging. Drag & drop upload with a live progress bar, plus optional WAN sharing from anywhere via a Cloudflare Tunnel one-tap short link.',
+    install: 'git clone https://github.com/pktradingview3-ops/wifi-file-transfer.git'
   }
 };
 
 const LOCAL = [
-  { name:'wifi-file-transfer', ico:'⇄', featured:3, status:'local', lang:'Python', size:'299 lines',
-    license:'—', updated:'2026-10-06', install:'',
-    blurb:'Move files between a computer and any phone over the same Wi-Fi network — no cable, no app install, no USB debugging. The phone just opens a web page.' },
   { name:'offline-chat-app', ico:'⛓', featured:4, status:'local', lang:'Kotlin + WebRTC', size:'',
     license:'—', updated:'2026-10-07', install:'',
     blurb:'Offline peer-to-peer chat across Android and the web over WebRTC — no server and no internet on the local link. A Kotlin app plus a web client.' },
@@ -465,7 +467,12 @@ const EMBEDDED = [
     install:'git clone https://github.com/pktradingview3-ops/android-tcp.git' },
   { name:'calc', ico:'=', status:'github', lang:'', size:'112 KB', license:'',
     stars:0, updated:'2026-10-06', featured:2, topics:[],
-    blurb:FEATURED['calc'].blurb, url:'https://github.com/pktradingview3-ops/calc', install:'' }
+    blurb:FEATURED['calc'].blurb, url:'https://github.com/pktradingview3-ops/calc', install:'' },
+  { name:'wifi-file-transfer', ico:'⇄', status:'github', lang:'Python', size:'', license:'MIT',
+    stars:0, updated:'2026-10-08', featured:3, topics:[],
+    blurb:FEATURED['wifi-file-transfer'].blurb,
+    url:'https://github.com/pktradingview3-ops/wifi-file-transfer',
+    install:'git clone https://github.com/pktradingview3-ops/wifi-file-transfer.git' }
 ];
 
 /* ========================================================================= */
