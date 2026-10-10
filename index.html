@@ -450,6 +450,11 @@ const FEATURED = {
     ico: '§', featured: 7,
     blurb: 'Standing rules and working conventions for these projects — how work gets built, tested and published. Documents the git push publish workflow (SEO, topics, secret scanning, verification), the testing-guide requirement, communication rules and the machine toolchain.',
     install: 'git clone https://github.com/pktradingview3-ops/robinhood55-conventions.git'
+  },
+  'offline-chat-web': {
+    ico: '⛓', featured: 8,
+    blurb: 'Offline chat over your local network — peer-to-peer and end-to-end encrypted (X25519 + HKDF-SHA256 + AES-256-GCM). A React/TypeScript web client and a Kotlin/Compose Android client share a Node.js signaling relay that carries the WebRTC handshake only, never a chat message. No internet, no accounts, no cloud.',
+    install: 'git clone https://github.com/pktradingview3-ops/offline-chat-web.git'
   }
 };
 
@@ -482,7 +487,12 @@ const EMBEDDED = [
     stars:0, updated:'2026-10-08', featured:7, topics:[],
     blurb:FEATURED['robinhood55-conventions'].blurb,
     url:'https://github.com/pktradingview3-ops/robinhood55-conventions',
-    install:'git clone https://github.com/pktradingview3-ops/robinhood55-conventions.git' }
+    install:'git clone https://github.com/pktradingview3-ops/robinhood55-conventions.git' },
+  { name:'offline-chat-web', ico:'⛓', status:'github', lang:'TypeScript', size:'', license:'MIT',
+    stars:0, updated:'2026-10-10', featured:8, topics:[],
+    blurb:FEATURED['offline-chat-web'].blurb,
+    url:'https://github.com/pktradingview3-ops/offline-chat-web',
+    install:'git clone https://github.com/pktradingview3-ops/offline-chat-web.git' }
 ];
 
 /* ========================================================================= */
